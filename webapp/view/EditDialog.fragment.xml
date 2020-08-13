@@ -25,7 +25,8 @@ xmlns:f="sap.ui.layout.form"
 			</f:SimpleForm>
 
       <beginButton>
-         <Button text="Ok" press=".onCloseDialog"/>
+         <Button text="Edit" press=".onCloseDialog"/>
+				
       </beginButton>
    </Dialog>
 </core:FragmentDefinition>

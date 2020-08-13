@@ -5,15 +5,8 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc">
 
-	<Page showHeader="true">
-
-		<customHeader>
-			<Toolbar>
-				<Button type="Back" press="onBack" />
-				<ToolbarSpacer/>
-
-			</Toolbar>
-		</customHeader>
+	<Page showHeader="true" showNavButton="true"
+		navButtonPress=".onNavBack">
 
 		<VBox class="sapUiSmallMargin">
 			<f:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" title="Register Form" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
@@ -44,6 +37,7 @@
 			</Toolbar>
 		</VBox>
 
+		
 		<VBox>
 			<Table id="myTable" items="{ path: 'tableModelPath>/table' }">
 				<columns>
@@ -62,6 +56,9 @@
 					<Column width="2rem">
 						<Label text="Edit"/>
 					</Column>
+					<Column width="2rem">
+						<Label text="Delete"/>
+					</Column>
 				</columns>
 
 				<items>
@@ -72,6 +69,7 @@
 							<Text text="{tableModelPath>email}" />
 							<Text text="{tableModelPath>country}" />
 							<Button id="edit" icon="sap-icon://edit" enabled="true" press="handleEdit" />
+							<Button id="delete" icon="sap-icon://delete" enabled="true" press="handleDelete" />
 						</cells>
 					</ColumnListItem>
 				</items>
