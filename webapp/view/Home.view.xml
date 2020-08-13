@@ -5,8 +5,7 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc">
 
-	<Page showHeader="true" showNavButton="true"
-		navButtonPress=".onNavBack">
+	<Page showHeader="true" showNavButton="true">
 
 		<VBox class="sapUiSmallMargin">
 			<f:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" title="Register Form" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
@@ -31,9 +30,7 @@
 				</f:content>
 			</f:SimpleForm>
 			<Toolbar>
-				<Button id="cancel" text="Cancel" press="handleCancel" />
-				<ToolbarSpacer/>
-				<Button id="save" text="Save" type="Emphasized" press="handleSave" />
+				<Button id="save" icon="sap-icon://save" type="Emphasized" press="handleSave" />
 			</Toolbar>
 		</VBox>
 

@@ -7,7 +7,17 @@ sap.ui.define(
   ],
   function (Controller, History, JSONModel, Fragment) {
     "use strict"
+
+    window.dataStructure = {
+      id: "",
+      name: "",
+      lastName: "",
+      email: "",
+      country: "Turkey"
+    };
+
     return Controller.extend("workerapp.controller.Home", {
+
       onInit: function () {
         //runs one time for a view
         //model for the table
@@ -17,46 +27,18 @@ sap.ui.define(
         //set the model to the root of the view
         this.getView().setModel(this.tableDataModel, "tableModelPath")
         this.formDataModel = new JSONModel({
-          form: {
-            id:"",
-            name: "",
-            lastName: "",
-            email: "",
-            country: "Turkey"
-          },
+          form: dataStructure,
         });
         this.getView().setModel(this.formDataModel, "formModelPath")
 
         /** Edit Form Model */
         this.editDataModel = new JSONModel({
-          form: {
-            id:"",
-            name: "",
-            lastName: "",
-            email: "",
-            country: ""
-          },
+          form: dataStructure,
         })
         this.getView().setModel(this.editDataModel, "editModelPath")
       },
 
-      /** Back button */
-      onNavBack: function () {
-        var oHistory = History.getInstance()
-        var sPreviousHash = oHistory.getPreviousHash()
-
-        if (sPreviousHash !== undefined) {
-          window.history.go(-1)
-        } else {
-          var oRouter = UIComponent.getRouterFor(this)
-          oRouter.navTo("overview", {}, true)
-        }
-      },
-
-
-
-      handleCancel: function () {},
-
+      ///////////////////////////////////// handleSave /////////////////////////////////////
       handleSave: function () {
         //when the user clicks save get the data from the "form"
         var jsonDataFromView = this.getView()
@@ -66,14 +48,14 @@ sap.ui.define(
           "data extracted from the form is: " + JSON.stringify(jsonDataFromView)
         )
         /** create new object for each row you are going to create(updating the object) */
-        var newObject2 ={
-            id: new Date().getTime(),
-            name:  jsonDataFromView.name,
-            lastName:  jsonDataFromView.lastName,
-            email:  jsonDataFromView.email,
-            country:  jsonDataFromView.country
+        var newObject2 = {
+          id: new Date().getTime(),
+          name: jsonDataFromView.name,
+          lastName: jsonDataFromView.lastName,
+          email: jsonDataFromView.email,
+          country: jsonDataFromView.country
         };
-        
+
         var tableDataModelExtracted = this.getView().getModel("tableModelPath")
         var newTableData = tableDataModelExtracted.getData()
         console.log("tableDataModelExtracted: " + JSON.stringify(newTableData))
@@ -85,8 +67,7 @@ sap.ui.define(
         //this.getView().byId("myTable").setModel(this.tableDaataModel);
       },
 
-      /** Edit the data */
-
+      ///////////////////////////////////// handleEdit /////////////////////////////////////
       handleEdit: function (event) {
         //get the row that was clicked
         var row = event.getSource()
@@ -115,6 +96,8 @@ sap.ui.define(
           this.byId("editDialog").open()
         }
       },
+
+      ///////////////////////////////////// onCloseDialog /////////////////////////////////////
       onCloseDialog: function () {
         var editModelData = this.getView().getModel("editModelPath").getData().form;
         var tableModel = this.getView().getModel("tableModelPath");
@@ -122,8 +105,8 @@ sap.ui.define(
         //modify data and set the new data to the table model
         tableList.forEach(function (item, index) {
           if (item.id == editModelData.id) {
-            var newObject={
-              id:editModelData.id,
+            var newObject = {
+              id: editModelData.id,
               name: editModelData.name,
               lastName: editModelData.lastName,
               email: editModelData.email,
@@ -139,29 +122,60 @@ sap.ui.define(
         console.log("editing completed!")
         this.byId("editDialog").close()
       },
-      handleDelete: function(event){
+
+      ///////////////////////////////////// handleDelete /////////////////////////////////////
+      handleDelete: function (event) {
         //get the row that was clicked
         var row = event.getSource()
         var context = row.getBindingContext("tableModelPath")
         var itemToDelete = context.oModel.getProperty(context.sPath)
         console.log(itemToDelete);
-        var newTableList =[];
+        //set the id to delete in a global variable
+        window.idToDelete=itemToDelete.id;
+        var oView = this.getView();
+        /** Load Fragment */
+        // create dialog lazily
+        if (!this.byId("deleteDialog")) {
+          // load asynchronous XML fragment
+          Fragment.load({
+            id: oView.getId(),
+            controller: this,
+            name: "workerapp.view.deleteDialog"
+          }).then(function (oDialog) {
+            // connect dialog to the root view of this component (models, lifecycle)
+            oView.addDependent(oDialog);
+            oDialog.open();
+          });
+        } else {
+          this.byId("deleteDialog").open();
+        }
+      },
+
+      onNoDialog: function () {
+        console.log("will not delete!");
+        this.byId("deleteDialog").close();
+      },
+
+      onYesDialog: function (event) {
+        
+        var newTableList = [];
         var indexofNewTable = 0;
 
         // delete the item that is selected
         var tableModel = this.getView().getModel("tableModelPath");
         var tableList = tableModel.getData().table;
         tableList.forEach(function (item, index) {
-          if (item.id !== itemToDelete.id) {
+          if (item.id !== window.idToDelete) {
             newTableList[indexofNewTable++] = item;
           }
         });
         console.log(newTableList);
-        
+
         // set the updated list to the table model 
-        tableModel.setData({table: newTableList});
+        tableModel.setData({ table: newTableList });
+        this.byId("deleteDialog").close();
       }
-        
+
     })
   }
 )

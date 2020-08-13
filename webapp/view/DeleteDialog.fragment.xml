@@ -1,0 +1,8 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+  <Dialog id="deleteDialog">
+    <Text text="Are you sure you want to delete this row?" />
+    <Button text="Yes" press=".onYesDialog"/>
+    <Button text="No" press=".onNoDialog"/>
+  </Dialog>
+</core:FragmentDefinition>
