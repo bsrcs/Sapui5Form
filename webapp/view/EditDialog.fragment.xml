@@ -1,0 +1,31 @@
+<core:FragmentDefinition 
+xmlns="sap.m"
+xmlns:f="sap.ui.layout.form"
+   xmlns:core="sap.ui.core">
+
+   <Dialog id="editDialog">
+      <f:SimpleForm id="EditFragmentForm" editable="true" layout="ResponsiveGridLayout" title="Edit Form" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+				<f:content>
+					<Label text="First Name" />
+					<Input id="editFragment_fname" placeholder="Enter Name ..." value="{editModelPath>/form/name}" />
+					<Label text="Last Name" />
+					<Input id="editFragment_lname" placeholder="Enter Surname ..." value="{editModelPath>/form/lastName}"/>
+					<Label text="Email" />
+					<Input type="Email" id="editFragment_email" placeholder="Enter Email ..." value="{editModelPath>/form/email}" />
+					<Label text="Country" />
+					<Select id="editFragment_country" selectedKey="{editModelPath>/form/country}">
+						<items>
+							<core:Item text="Turkey" key="Turkey"/>
+							<core:Item text="England" key="England"/>
+							<core:Item text="Germany" key="Germany"/>
+							<core:Item text="USA" key="USA"/>
+						</items>
+					</Select>
+				</f:content>
+			</f:SimpleForm>
+
+      <beginButton>
+         <Button text="Ok" press=".onCloseDialog"/>
+      </beginButton>
+   </Dialog>
+</core:FragmentDefinition>

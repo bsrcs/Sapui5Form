@@ -1,0 +1,85 @@
+<mvc:View controllerName="workerapp.controller.Home"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<Page showHeader="true">
+
+		<customHeader>
+			<Toolbar>
+				<Button type="Back" press="onBack" />
+				<ToolbarSpacer/>
+
+			</Toolbar>
+		</customHeader>
+
+		<VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" title="Register Form" labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+				<f:content>
+					<Label text="First Name" />
+					<Input id="fname" placeholder="Enter Name ..." value="{formModelPath>/form/name}" />
+					<Label text="Last Name" />
+					<Input id="lname" placeholder="Enter Surname ..." value="{formModelPath>/form/lastName}"/>
+					<Label text="Email" />
+					<Input type="Email" id="email" placeholder="Enter Email ..." value="{formModelPath>/form/email}" />
+					<Label text="Country" />
+					<Select id="country" selectedKey="{formModelPath>/form/country}">
+						<items>
+							<core:Item text="Turkey" key="Turkey"/>
+							<core:Item text="England" key="England"/>
+							<core:Item text="Germany" key="Germany"/>
+							<core:Item text="USA" key="USA"/>
+						</items>
+					</Select>
+					<Label text="Password" />
+					<Input id="password" type="Password" placeholder="Enter Password ..."/>
+				</f:content>
+			</f:SimpleForm>
+			<Toolbar>
+				<Button id="cancel" text="Cancel" press="handleCancel" />
+				<ToolbarSpacer/>
+				<Button id="save" text="Save" type="Emphasized" press="handleSave" />
+			</Toolbar>
+		</VBox>
+
+		<VBox>
+			<Table id="myTable" items="{ path: 'tableModelPath>/table' }">
+				<columns>
+					<Column width="2rem">
+						<Label text="Name" />
+					</Column>
+					<Column width="2rem">
+						<Label text="Surname" />
+					</Column>
+					<Column width="2rem">
+						<Label text="Email" />
+					</Column>
+					<Column width="2rem">
+						<Label text="Country" />
+					</Column>
+					<Column width="2rem">
+						<Label text="Edit"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text text="{tableModelPath>name}" />
+							<Text text="{tableModelPath>lastName}" />
+							<Text text="{tableModelPath>email}" />
+							<Text text="{tableModelPath>country}" />
+							<Button id="edit" icon="sap-icon://edit" enabled="true" press="handleEdit" />
+						</cells>
+					</ColumnListItem>
+				</items>
+
+			</Table>
+		</VBox>
+
+
+
+	</Page>
+</mvc:View>

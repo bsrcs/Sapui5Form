@@ -1,0 +1,8 @@
+<mvc:View controllerName="workerapp.controller.App"
+	xmlns="sap.m"
+	xmlns:u="sap.ui.unified"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true">
+	<App id="app">
+		
+			</App>
+		</mvc:View>
